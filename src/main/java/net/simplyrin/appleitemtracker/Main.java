@@ -31,9 +31,9 @@ import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 
 /**
- * Created by rin on 2021/10/19.
+ * Created by SimplyRin on 2021/10/19.
  *
- * Copyright (c) 2021 rin
+ * Copyright (c) 2021 SimplyRin
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
