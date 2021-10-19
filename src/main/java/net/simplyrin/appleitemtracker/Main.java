@@ -132,6 +132,8 @@ public class Main {
 							}
 
 							if (value != stock) {
+								this.stockMap.put(key, stock);
+
 								System.out.println("§r  - 在庫ステータスが変更されました。前回: " + this.formatStockData(value) + ", 今回: " + this.formatStockData(stock));
 								this.tweetData(itemName + " (" + part + ")", "Apple " + storeName, stock);
 							}
