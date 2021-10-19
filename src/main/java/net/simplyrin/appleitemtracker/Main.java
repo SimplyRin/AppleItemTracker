@@ -152,7 +152,7 @@ public class Main {
 
 	public void tweetData(String model, String store, boolean available) {
 		try {
-			this.twitter.updateStatus(store + "\n" + model + "\nの在庫ステータスが変更されました。\n\n在庫: " + this.formatStockData(available));
+			this.twitter.updateStatus(store + "\n" + model + "\n\n在庫ステータスが変更されました。\n新しいステータス在庫: " + this.formatStockData(available));
 		} catch (Exception e) {
 		}
 	}
