@@ -4,9 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -139,7 +141,38 @@ public class Main {
 				}
 
 				try {
-					TimeUnit.MINUTES.sleep(10);
+					Calendar calendar = Calendar.getInstance();
+					calendar.setTime(new Date());
+					int h = calendar.get(Calendar.HOUR_OF_DAY);
+					int m = calendar.get(Calendar.MINUTE);
+
+					// System.out.println(h);
+
+					if (m >= 50) {
+						calendar.set(Calendar.MINUTE, 0);
+						calendar.add(Calendar.HOUR_OF_DAY, 1);
+
+						if (h == 23) {
+							calendar.add(Calendar.DAY_OF_MONTH, 1);
+						}
+					} else if (m >= 40) {
+						calendar.set(Calendar.MINUTE, 50);
+					} else if (m >= 30) {
+						calendar.set(Calendar.MINUTE, 40);
+					} else if (m >= 20) {
+						calendar.set(Calendar.MINUTE, 30);
+					} else if (m >= 10) {
+						calendar.set(Calendar.MINUTE, 20);
+					} else {
+						calendar.set(Calendar.MINUTE, 10);
+					}
+					calendar.set(Calendar.SECOND, 0);
+					calendar.set(Calendar.MILLISECOND, 0);
+
+					Date date = calendar.getTime();
+					long sleep = date.getTime() - System.currentTimeMillis();
+					System.out.println("処理開始時刻: " + new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(date));
+					Thread.sleep(sleep);
 				} catch (Exception e) {
 				}
 			}
@@ -152,9 +185,10 @@ public class Main {
 
 	public void tweetData(String model, String store, boolean available) {
 		try {
-			this.twitter.updateStatus(store + "\n" + model + "\n\n在庫ステータスが変更されました。\n新しいステータス在庫: " + this.formatStockData(available));
+			this.twitter.updateStatus(store + "\n" + model + "\n\n在庫ステータスが変更されました。\n現在の在庫: " + this.formatStockData(available));
 		} catch (Exception e) {
-		}
+			e.printStackTrace();
+	 	}
 	}
 
 	public JsonElement getJsonFromUrl(String url) {
