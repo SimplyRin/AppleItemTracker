@@ -151,10 +151,6 @@ public class Main {
 					if (m >= 50) {
 						calendar.set(Calendar.MINUTE, 0);
 						calendar.add(Calendar.HOUR_OF_DAY, 1);
-
-						if (h == 23) {
-							calendar.add(Calendar.DAY_OF_MONTH, 1);
-						}
 					} else if (m >= 40) {
 						calendar.set(Calendar.MINUTE, 50);
 					} else if (m >= 30) {
