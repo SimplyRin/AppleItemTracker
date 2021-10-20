@@ -122,7 +122,7 @@ public class Main {
 							String itemName = item.get("storePickupProductTitle").getAsString();
 							boolean stock = item.get("storeSelectionEnabled").getAsBoolean();
 
-							System.out.println("- " + part + " (在庫: " + this.formatStockData(stock) + "§r), " + itemName);
+							System.out.println("- " + part + " (在庫: " + this.formatStockData(stock, true) + "§r), " + itemName);
 
 							String key = storeId + "_" + part;
 							Boolean value = this.stockMap.get(key);
@@ -134,7 +134,7 @@ public class Main {
 							if (value != stock) {
 								this.stockMap.put(key, stock);
 
-								System.out.println("§r  - 在庫ステータスが変更されました。前回: " + this.formatStockData(value) + ", 今回: " + this.formatStockData(stock));
+								System.out.println("§r  - 在庫ステータスが変更されました。前回: " + this.formatStockData(value, true) + "§r, 今回: " + this.formatStockData(stock, true) + "§r");
 								this.tweetData(itemName + " (" + part + ")", "Apple " + storeName, stock);
 							}
 						}
@@ -177,13 +177,17 @@ public class Main {
 		});
 	}
 
-	public String formatStockData(boolean bool) {
-		return bool ? "§aあり" : "§cなし";
+	public String formatStockData(boolean bool, boolean color) {
+		if (color) {
+			return bool ? "§aあり" : "§cなし";
+		} else {
+			return bool ? "あり" : "なし";
+		}
 	}
 
 	public void tweetData(String model, String store, boolean available) {
 		try {
-			this.twitter.updateStatus(store + "\n" + model + "\n\n在庫ステータスが変更されました。\n現在の在庫: " + this.formatStockData(available));
+			this.twitter.updateStatus(store + "\n" + model + "\n\n在庫ステータスが変更されました。\n現在の在庫: " + this.formatStockData(available, false));
 		} catch (Exception e) {
 			e.printStackTrace();
 	 	}
