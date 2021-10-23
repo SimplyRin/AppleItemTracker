@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Scanner;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -123,15 +124,13 @@ public class Main {
 						System.out.println("ストア: " + storeName + " (" + storeEmail + ")");
 
 						LinkedHashMap<String, Object> parts = (LinkedHashMap<String, Object>) map.get("partsAvailability");
-						for (Object part1 : parts.values()) {
-							LinkedHashMap<String, Object> part = (LinkedHashMap<String, Object>) part1;
+						for (Entry<String, Object> part1 : parts.entrySet()) {
+							LinkedHashMap<String, Object> part = (LinkedHashMap<String, Object>) part1.getValue();
 
-							String partNumber = (String) part.get("partNumber");
 							String itemName = (String) part.get("storePickupProductTitle");
 							boolean stock = (boolean) part.get("storeSelectionEnabled");
 
-							System.out.println(
-									"- " + partNumber + " (在庫: " + this.formatStockData(stock, true) + "§r), " + itemName);
+							System.out.println("- " + part1.getKey() + " (在庫: " + this.formatStockData(stock, true) + "§r), " + itemName);
 
 							String key = storeId + "_" + part;
 							Boolean value = this.stockMap.get(key);
@@ -143,8 +142,7 @@ public class Main {
 							if (value != stock) {
 								this.stockMap.put(key, stock);
 
-								System.out.println("§r  - 在庫ステータスが変更されました。前回: " + this.formatStockData(value, true)
-										+ "§r, 今回: " + this.formatStockData(stock, true) + "§r");
+								System.out.println("§r  - 在庫ステータスが変更されました。前回: " + this.formatStockData(value, true) + "§r, 今回: " + this.formatStockData(stock, true) + "§r");
 								this.tweetData(itemName + " (" + part + ")", "Apple " + storeName, stock);
 							}
 						}
