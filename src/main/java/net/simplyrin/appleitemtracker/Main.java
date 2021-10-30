@@ -19,9 +19,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import net.md_5.bungee.config.Configuration;
 import net.simplyrin.appleitemtracker.utils.ThreadPool;
 import net.simplyrin.config.Config;
+import net.simplyrin.config.Configuration;
 import net.simplyrin.rinstream.RinStream;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
